@@ -22,6 +22,22 @@ class QuantumGate:
     
 
 
+class Identity(QuantumGate):
+    def __init__(self) -> None:
+        super().__init__(num_qubits=1)
+
+    def matrix(self) -> np.ndarray:
+        # Define the Hadamard matrix for a single qubit
+        hadamard = np.array([[1, 0], [0, 1]], dtype=qtype)
+        return hadamard if not self._dagger else np.matrix.getH(hadamard)
+
+    def dagger(self) -> None:
+        self._dagger = True
+
+    def is_dagger(self) ->bool:
+        return self._dagger
+    
+
 
 class Hadamard(QuantumGate):
     def __init__(self) -> None:
@@ -158,3 +174,32 @@ class CNOT(QuantumGate):
 
     def __str__(self) -> str:
         return "CNOT"
+    
+
+
+class SWAP(QuantumGate):
+    def __init__(self) -> None:
+        super().__init__(num_qubits=2)
+
+    def matrix(self) -> np.ndarray:
+        swap = np.array([[1, 0, 0, 0], [0, 0, 1, 0], [0, 1, 0, 0], [0, 0, 0, 1]], dtype=qtype)
+        return swap if not self._dagger else np.matrix.getH(swap)
+
+    def __str__(self) -> str:
+        return "SWAP"
+
+
+
+
+class CRz(QuantumGate):
+    def __init__(self, k:int) -> None:
+        super().__init__(num_qubits=2)
+        self._k=k
+
+    def matrix(self) -> np.ndarray:
+        crz = np.array([[1, 0, 0, 0], [0, 1, 0, 0], [0, 0, 1, 0], [0, 0, 0, np.exp(1j*2*np.pi/(2**self._k))]], dtype=qtype)
+        return crz if not self._dagger else np.matrix.getH(crz)
+
+    def __str__(self) -> str:
+        return "CRz("+self._k+")"
+    
