@@ -1,2 +1,3 @@
 qiskit==1.1.1
 qutip==5.0.2
+numpy==1.26.4
