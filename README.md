@@ -63,5 +63,27 @@ decomposed.draw('mpl')
 
 
 
+# SolovayKitaevDecomposition in qiskit
 
+
+To further understand the algorithm, please read the documentation:
+https://docs.quantum.ibm.com/api/qiskit/qiskit.synthesis.SolovayKitaevDecomposition
+
+
+
+Execute the following code in jupyter notebook:
+
+
+```python
+from qiskit.synthesis import SolovayKitaevDecomposition
+import numpy as np
+
+SVdecomposer=SolovayKitaevDecomposition()
+
+#Set the matrix that you want to decompose into T and H
+gatematrix = np.array([[1, 0],[0, np.exp(1j*np.pi/4)]])
+
+circuit=SVdecomposer.run(gatematrix,recursion_degree=2)
+circuit.draw('mpl')
+```
 
